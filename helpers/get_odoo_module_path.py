@@ -20,4 +20,4 @@ def get_odoo_module_path(path: Path | str = Path(getcwd())) -> Path:
     def return_folder_name_if_its_an_odoo_module(path: Path) -> Path:
         if path == path.parent: raise NotInAnOdooModule('This script is not part of an Odoo module')
         return path if path_is_odoo_module(path) else return_folder_name_if_its_an_odoo_module(path.parent)
-    return return_folder_name_if_its_an_odoo_module(Path(path) if not Path(path).is_file() else Path(path).parent)
+    return return_folder_name_if_its_an_odoo_module(Path(path) if not Path(path).is_file() else Path(path).parent).resolve()
