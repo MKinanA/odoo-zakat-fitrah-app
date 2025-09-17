@@ -1,0 +1,1 @@
+def raise_exception(exception: BaseException): raise exception
