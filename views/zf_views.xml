@@ -1,0 +1,112 @@
+<odoo>
+    <!-- Views -->
+    <record id="muzakki_list" model="ir.ui.view"><!-- List view (index) for muzakki -->
+        <field name="name">Muzakki</field>
+        <field name="model">zf.muzakki</field>
+        <field name="arch" type="xml">
+            <list string="Muzakki">
+                <field name="nama"/>
+                <field name="jumlah_jiwa_zakat_fitrah"/>
+                <field name="zakat_fitrah_kilogram_beras"/>
+                <field name="zakat_fitrah_liter_beras"/>
+                <field name="fidyah_kilogram_beras"/>
+                <field name="fidyah_liter_beras"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="mustahiq_list" model="ir.ui.view"><!-- List view (index) for mustahiq -->
+        <field name="name">Mustahiq</field>
+        <field name="model">zf.mustahiq</field>
+        <field name="arch" type="xml">
+            <list string="Mustahiq">
+                <field name="nama"/>
+                <field name="kilogram_beras_dari_zakat_fitrah"/>
+                <field name="liter_beras_dari_zakat_fitrah"/>
+                <field name="kilogram_beras_dari_fidyah"/>
+                <field name="liter_beras_dari_fidyah"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="zf_muzakki_action" model="ir.actions.act_window"><!-- Muzakki action -->
+        <field name="name">Muzakki</field>
+        <field name="res_model">zf.muzakki</field>
+        <field name="view_mode">list,form</field>
+        <field name="views" eval="[
+            (ref('muzakki_list'), 'tree'),
+        ]"/>
+    </record>
+
+    <record id="zf_mustahiq_action" model="ir.actions.act_window"><!-- Mustahiq action -->
+        <field name="name">Mustahiq</field>
+        <field name="res_model">zf.mustahiq</field>
+        <field name="view_mode">list,form</field>
+        <field name="views" eval="[
+            (ref('mustahiq_list'), 'tree'),
+        ]"/>
+    </record>
+
+    <record id="zf_dashboard_action" model="ir.actions.act_url"> <!-- Dashboard -->
+        <field name="name">Dashboard</field>
+        <field name="url">/zakat-fitrah</field>
+        <field name="target">self</field>
+    </record>
+
+    <!-- Menus -->
+    <record id="zf_menu_root" model="ir.ui.menu"><!-- Root (1st level) menu (defined by not specifying a parent) -->
+        <field name="name">Zakat Fitrah</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="zf_menu_muzakki" model="ir.ui.menu"><!-- First (2nd level) menu (defined by specifying a parent that is a root menu) for muzakki -->
+        <field name="name">Muzakki</field>
+        <field name="parent_id" ref="zf_menu_root"/>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="zf_menu_mustahiq" model="ir.ui.menu"><!-- First (2nd level) menu (defined by specifying a parent that is a root menu) for mustahiq -->
+        <field name="name">Mustahiq</field>
+        <field name="parent_id" ref="zf_menu_root"/>
+        <field name="sequence">2</field>
+    </record>
+
+    <record id="zf_menu_dashboard" model="ir.ui.menu"><!-- First (2nd level) menu (defined by specifying a parent that is a root menu) for dashboard -->
+        <field name="name">Summary</field>
+        <field name="parent_id" ref="zf_menu_root"/>
+        <field name="sequence">3</field>
+    </record>
+
+    <record id="zf_menu_view_muzakki" model="ir.ui.menu"><!-- Action (3rd level) menu (defined by specifying a parent that is a first menu) for muzakki -->
+        <field name="name">Tampilkan muzakki</field>
+        <field name="parent_id" ref="zf_menu_muzakki"/>
+        <field name="action" ref="zf_muzakki_action"/>
+    </record>
+
+    <record id="zf_menu_view_mustahiq" model="ir.ui.menu"><!-- Action (3rd level) menu (defined by specifying a parent that is a first menu) for mustahiq -->
+        <field name="name">Tampilkan mustahiq</field>
+        <field name="parent_id" ref="zf_menu_mustahiq"/>
+        <field name="action" ref="zf_mustahiq_action"/>
+    </record>
+
+    <record id="zf_menu_view_dashboard" model="ir.ui.menu"><!-- Action (3rd level) menu (defined by specifying a parent that is a first menu) for dashboard -->
+        <field name="name">Tampilkan summary</field>
+        <field name="parent_id" ref="zf_menu_dashboard"/>
+        <field name="action" ref="zf_dashboard_action"/>
+    </record>
+
+    <!-- Template -->
+    <template id="zf_dashboard_template" name="Summary">
+        <t t-call="web.layout">
+        <div class="o_content">
+            <p>Total Muzakki: <t t-esc="total_muzakki"/></p>
+            <p>Total Mustahiq: <t t-esc="total_mustahiq"/></p>
+            <br/>
+            <p>Total Beras yang Ada: <t t-esc="total_kg_beras"/>kg + <t t-esc="total_liter_beras"/> liter</p>
+            <p>Total Beras Disetor: <t t-esc="total_kg_beras_disetor"/>kg + <t t-esc="total_liter_beras_disetor"/> liter</p>
+            <p>Total Beras yang Sudah Disalurkan: <t t-esc="total_kg_beras_disalurkan"/>kg + <t t-esc="total_liter_beras_disalurkan"/> liter</p>
+        </div>
+        </t>
+    </template>
+</odoo>

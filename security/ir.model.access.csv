@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zf_muzakki_user,zf.muzakki user,model_zf_muzakki,base.group_user,1,1,1,1
+access_zf_mustahiq_user,zf.mustahiq user,model_zf_mustahiq,base.group_user,1,1,1,1
