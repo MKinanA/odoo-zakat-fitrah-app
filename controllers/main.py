@@ -20,7 +20,8 @@ class ZakatFitrahController(http.Controller):
     def summary(self, **kw) -> str: return json(self._summary())
 
     # Non-route functions
-    def _summary(self) -> dict:
+    @staticmethod
+    def _summary() -> dict:
         muzakkis = http.request.env['zf.muzakki'].search([])
         mustahiqs = http.request.env['zf.mustahiq'].search([])
 
