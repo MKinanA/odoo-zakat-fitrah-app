@@ -7,13 +7,19 @@ from ..helpers.raise_exception import raise_exception
 from ..helpers.key_error_safe_dict import KeyErrorSafeDict
 from ..helpers.simple_log import simple_log as print
 
+# Private consts
+STATIC_FOLDER = 'static'
+ODOO_MODULE_PATH = get_odoo_module_path(__file__)
+STATIC_PATH = (ODOO_MODULE_PATH/STATIC_FOLDER).resolve()
+
+private_globals = {*globals(), 'private_globals'} # A snapshot of all keys of `globals()` after declaration of all private consts, anything global declared after this will be exposed and accessible by the internet
+get_safe_globals = lambda globals: {key: globals[key] for key in globals if key not in private_globals}
+
+# Safe-to-expose consts
 ROUTE_PREFIX = '/zakat-fitrah'
 API_ROUTE_PREFIX = f'{ROUTE_PREFIX}/api'
-STATIC_FOLDER = 'static'
 STATIC_ROUTE_PREFIX = f'{ROUTE_PREFIX}/{STATIC_FOLDER}'
-ODOO_MODULE_PATH = get_odoo_module_path(__file__)
 ODOO_MODULE_NAME = ODOO_MODULE_PATH.parts[-1]
-STATIC_PATH = (ODOO_MODULE_PATH/STATIC_FOLDER).resolve()
 
 HTTP_NOT_FOUND = http.NotFound('Requested resource is not found on the server')
 HTTP_ACCESS_DENIED = http.AccessDenied('Access to requested resource denied')
@@ -27,7 +33,7 @@ class ZakatFitrahController(http.Controller):
         return open(STATIC_PATH/'dashboard.html').read().format_map(KeyErrorSafeDict({
             **self._recap(),
             'judul': 'Rekap',
-            'static_route': STATIC_ROUTE_PREFIX,
+            'STATIC_ROUTE_PREFIX': STATIC_ROUTE_PREFIX,
         }, to_return_on_missing_key=lambda key: f'{{{key}}}'))
 
     # API routes
