@@ -85,18 +85,4 @@
         <field name="parent_id" ref="zf_menu_dashboard"/>
         <field name="action" ref="zf_dashboard_action"/>
     </record>
-
-    <!-- Template -->
-    <template id="zf_dashboard_template" name="Summary">
-        <t t-call="web.layout">
-        <div class="o_content">
-            <p>Total Muzakki: <t t-esc="total_muzakki"/></p>
-            <p>Total Mustahiq: <t t-esc="total_mustahiq"/></p>
-            <br/>
-            <p>Total Beras yang Ada: <t t-esc="total_kg_beras"/>kg + <t t-esc="total_liter_beras"/> liter</p>
-            <p>Total Beras Disetor: <t t-esc="total_kg_beras_disetor"/>kg + <t t-esc="total_liter_beras_disetor"/> liter</p>
-            <p>Total Beras yang Sudah Disalurkan: <t t-esc="total_kg_beras_disalurkan"/>kg + <t t-esc="total_liter_beras_disalurkan"/> liter</p>
-        </div>
-        </t>
-    </template>
 </odoo>
