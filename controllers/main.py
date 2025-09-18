@@ -3,6 +3,7 @@ from json import dumps as json
 from mimetypes import guess_type as guess_mimetype
 from ..helpers.get_odoo_module_path import get_odoo_module_path
 from ..helpers.raise_exception import raise_exception
+from ..helpers.key_error_safe_dict import KeyErrorSafeDict
 
 ROUTE_PREFIX = '/zakat-fitrah'
 API_ROUTE_PREFIX = f'{ROUTE_PREFIX}/api'
