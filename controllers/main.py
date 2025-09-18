@@ -22,11 +22,11 @@ class ZakatFitrahController(http.Controller):
     # Regular routes
     @http.route(ROUTE_PREFIX)
     def root(self, **kw) -> str:
-        return open(STATIC_PATH/'dashboard.html').read().format_map(KeyErrorSafeDict({**self._summary(), 'judul': 'Rekap'}))
+        return open(STATIC_PATH/'dashboard.html').read().format_map(KeyErrorSafeDict({**self._recap(), 'judul': 'Rekap'}))
 
     # API routes
-    @http.route(f'{API_ROUTE_PREFIX}/summary')
-    def summary(self, **kw) -> str: return json(self._summary())
+    @http.route(f'{API_ROUTE_PREFIX}/recap')
+    def recap(self, **kw) -> str: return json(self._recap())
 
     # Static resources route
     @http.route(f'{STATIC_ROUTE_PREFIX}/<path:subpath>')
@@ -41,7 +41,7 @@ class ZakatFitrahController(http.Controller):
 
     # Non-route functions
     @staticmethod
-    def _summary() -> dict:
+    def _recap() -> dict:
         muzakkis = http.request.env['zf.muzakki'].search([])
         mustahiqs = http.request.env['zf.mustahiq'].search([])
 
