@@ -31,7 +31,7 @@ class ZakatFitrahController(http.Controller):
     @http.route(f'{STATIC_ROUTE_PREFIX}/<path:subpath>')
     def static(self, subpath: str, **kw) -> str: return (
         raise_exception(HTTP_ACCESS_DENIED) if not str((STATIC_PATH/subpath).resolve()).startswith(str(STATIC_PATH))
-        else (lambda path: http.Response(open(path, 'rb').read(), content_type=guess_mimetype(path)[0] or 'application/octet-stream'))(
+        else http.send_file(
             STATIC_PATH/subpath/'index.html' if (STATIC_PATH/subpath).is_dir() and (STATIC_PATH/subpath/'index.html').is_file()
             else STATIC_PATH/subpath if (STATIC_PATH/subpath).is_file()
             else raise_exception(HTTP_NOT_FOUND)
