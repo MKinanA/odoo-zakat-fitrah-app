@@ -58,11 +58,11 @@ class ZakatFitrahController(http.Controller):
         return {
             'total_muzakki': total_muzakki,
             'total_mustahiq': total_mustahiq,
-            'total_kg_beras': round(total_kg_beras) if round(total_kg_beras) == total_kg_beras else total_kg_beras,
-            'total_liter_beras': round(total_liter_beras) if round(total_liter_beras) == total_liter_beras else total_liter_beras,
-            'total_kg_beras_disetor': round(total_kg_beras_disetor) if round(total_kg_beras_disetor) == total_kg_beras_disetor else total_kg_beras_disetor,
-            'total_liter_beras_disetor': round(total_liter_beras_disetor) if round(total_liter_beras_disetor) == total_liter_beras_disetor else total_liter_beras_disetor,
-            'total_kg_beras_disalurkan': round(total_kg_beras_disalurkan) if round(total_kg_beras_disalurkan) == total_kg_beras_disalurkan else total_kg_beras_disalurkan,
-            'total_liter_beras_disalurkan': round(total_liter_beras_disalurkan) if round(total_liter_beras_disalurkan) == total_liter_beras_disalurkan else total_liter_beras_disalurkan,
+            'total_kg_beras': round(total_kg_beras) if round(total_kg_beras) == total_kg_beras else round(total_kg_beras, 2),
+            'total_liter_beras': round(total_liter_beras) if round(total_liter_beras) == total_liter_beras else round(total_liter_beras, 2),
+            'total_kg_beras_disetor': round(total_kg_beras_disetor) if round(total_kg_beras_disetor) == total_kg_beras_disetor else round(total_kg_beras_disetor, 2),
+            'total_liter_beras_disetor': round(total_liter_beras_disetor) if round(total_liter_beras_disetor) == total_liter_beras_disetor else round(total_liter_beras_disetor, 2),
+            'total_kg_beras_disalurkan': round(total_kg_beras_disalurkan) if round(total_kg_beras_disalurkan) == total_kg_beras_disalurkan else round(total_kg_beras_disalurkan, 2),
+            'total_liter_beras_disalurkan': round(total_liter_beras_disalurkan) if round(total_liter_beras_disalurkan) == total_liter_beras_disalurkan else round(total_liter_beras_disalurkan, 2),
             'persentase_progres_penyaluran': f'{round(((((total_kg_beras_disalurkan / total_kg_beras_disetor) if total_kg_beras_disalurkan != 0 else 0) * 100) + (((total_liter_beras_disalurkan / total_liter_beras_disetor) if total_liter_beras_disalurkan != 0 else 0) * 100)) / 2)}%',
         }
