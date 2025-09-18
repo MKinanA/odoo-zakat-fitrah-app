@@ -23,7 +23,11 @@ class ZakatFitrahController(http.Controller):
     # Regular routes
     @http.route(ROUTE_PREFIX)
     def root(self, **kw) -> str:
-        return open(STATIC_PATH/'dashboard.html').read().format_map(KeyErrorSafeDict({**self._recap(), 'judul': 'Rekap'}))
+        return open(STATIC_PATH/'dashboard.html').read().format_map(KeyErrorSafeDict({
+            **self._recap(),
+            'judul': 'Rekap',
+            'static_route': STATIC_ROUTE_PREFIX,
+        }, to_return_on_missing_key=lambda key: f'{{{key}}}'))
 
     # API routes
     @http.route(f'{API_ROUTE_PREFIX}/recap')
