@@ -1,6 +1,6 @@
 from datetime import datetime
 from colorama import Fore
-from get_odoo_module_path import get_odoo_module_path
+from .get_odoo_module_path import get_odoo_module_path
 
 try: ODOO_MODULE_PATH = get_odoo_module_path(__file__)
 except: ODOO_MODULE_PATH = None
