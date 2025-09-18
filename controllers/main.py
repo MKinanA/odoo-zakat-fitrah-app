@@ -21,7 +21,7 @@ class ZakatFitrahController(http.Controller):
     # Regular routes
     @http.route(ROUTE_PREFIX)
     def root(self, **kw) -> str:
-        return open(ODOO_MODULE_PATH/'pages/dashboard.html').read().format(**self._summary())
+        return open(STATIC_PATH/'dashboard.html').read().format(**self._summary())
 
     # API routes
     @http.route(f'{API_ROUTE_PREFIX}/summary')
