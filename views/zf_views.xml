@@ -81,7 +81,7 @@
     </record>
 
     <record id="zf_menu_view_dashboard" model="ir.ui.menu"><!-- Action (3rd level) menu (defined by specifying a parent that is a first menu) for dashboard -->
-        <field name="name">Tampilkan summary</field>
+        <field name="name">Tampilkan rekap</field>
         <field name="parent_id" ref="zf_menu_dashboard"/>
         <field name="action" ref="zf_dashboard_action"/>
     </record>
