@@ -62,4 +62,5 @@ class ZakatFitrahController(http.Controller):
             'total_liter_beras_disetor': round(total_liter_beras_disetor) if round(total_liter_beras_disetor) == total_liter_beras_disetor else total_liter_beras_disetor,
             'total_kg_beras_disalurkan': round(total_kg_beras_disalurkan) if round(total_kg_beras_disalurkan) == total_kg_beras_disalurkan else total_kg_beras_disalurkan,
             'total_liter_beras_disalurkan': round(total_liter_beras_disalurkan) if round(total_liter_beras_disalurkan) == total_liter_beras_disalurkan else total_liter_beras_disalurkan,
+            'persentase_progres_penyaluran': f'{round(((((total_kg_beras_disalurkan / total_kg_beras_disetor) if total_kg_beras_disalurkan != 0 else 0) * 100) + (((total_liter_beras_disalurkan / total_liter_beras_disetor) if total_liter_beras_disalurkan != 0 else 0) * 100)) / 2)}%',
         }
