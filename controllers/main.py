@@ -1,6 +1,7 @@
 from odoo import http # pyright: ignore[reportMissingImports, reportAttributeAccessIssue] (ignore any import warnings here)
 from json import dumps as json
 from mimetypes import guess_type as guess_mimetype
+from pathlib import Path
 from ..helpers.get_odoo_module_path import get_odoo_module_path
 from ..helpers.raise_exception import raise_exception
 from ..helpers.key_error_safe_dict import KeyErrorSafeDict
@@ -70,3 +71,8 @@ class ZakatFitrahController(http.Controller):
             'total_liter_beras_disalurkan': round(total_liter_beras_disalurkan) if round(total_liter_beras_disalurkan) == total_liter_beras_disalurkan else round(total_liter_beras_disalurkan, 2),
             'persentase_progres_penyaluran': f'{round(((((total_kg_beras_disalurkan / total_kg_beras_disetor) if total_kg_beras_disalurkan != 0 else 0) * 100) + (((total_liter_beras_disalurkan / total_liter_beras_disetor) if total_liter_beras_disalurkan != 0 else 0) * 100)) / 2)}%',
         }
+
+    @staticmethod
+    def _open_and_format_file_if_text(path: Path | str):
+        try: return open(path, 'rt').read().format_map(KeyErrorSafeDict(get_safe_globals(globals()), to_return_on_missing_key=lambda key: key)) if 'noformat' not in Path(path).parts[-1] else open(path, 'rt').read()
+        except UnicodeDecodeError: return open(path, 'rb').read()
