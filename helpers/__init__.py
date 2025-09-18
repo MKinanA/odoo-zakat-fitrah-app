@@ -1,1 +1,1 @@
-from . import get_odoo_module_path, raise_exception, key_error_safe_dict
+from . import get_odoo_module_path, raise_exception, key_error_safe_dict, simple_log
