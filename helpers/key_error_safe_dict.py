@@ -1,2 +1,2 @@
 class KeyErrorSafeDict(dict):
-    def __missing__(self, key): return key
+    def __missing__(self, key) -> None: return None
