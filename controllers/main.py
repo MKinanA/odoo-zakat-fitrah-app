@@ -1,23 +1,42 @@
 from odoo import http # pyright: ignore[reportMissingImports, reportAttributeAccessIssue] (ignore any import warnings here)
 from json import dumps as json
+from mimetypes import guess_type as guess_mimetype
 from ..helpers.get_odoo_module_path import get_odoo_module_path
+from ..helpers.raise_exception import raise_exception
 
-PATH_PREFIX = '/zakat-fitrah'
-API_PATH_PREFIX = f'{PATH_PREFIX}/api'
+ROUTE_PREFIX = '/zakat-fitrah'
+API_ROUTE_PREFIX = f'{ROUTE_PREFIX}/api'
+STATIC_FOLDER = 'static'
+STATIC_ROUTE_PREFIX = f'{ROUTE_PREFIX}/{STATIC_FOLDER}'
 ODOO_MODULE_PATH = get_odoo_module_path(__file__)
 ODOO_MODULE_NAME = ODOO_MODULE_PATH.parts[-1]
+STATIC_PATH = (ODOO_MODULE_PATH/STATIC_FOLDER).resolve()
+
+HTTP_NOT_FOUND = http.NotFound('Requested resource is not found on the server')
+HTTP_ACCESS_DENIED = http.AccessDenied('Access to requested resource denied')
 
 class ZakatFitrahController(http.Controller):
     print(f'\n{ODOO_MODULE_NAME}: [SUCCESS] ZakatFitrahController controller loaded\n')
 
     # Regular routes
-    @http.route(PATH_PREFIX)
+    @http.route(ROUTE_PREFIX)
     def root(self, **kw) -> str:
         return open(ODOO_MODULE_PATH/'pages/dashboard.html').read().format(**self._summary())
 
     # API routes
-    @http.route(f'{API_PATH_PREFIX}/summary')
+    @http.route(f'{API_ROUTE_PREFIX}/summary')
     def summary(self, **kw) -> str: return json(self._summary())
+
+    # Static resources route
+    @http.route(f'{STATIC_ROUTE_PREFIX}/<path:subpath>')
+    def static(self, subpath: str, **kw) -> str: return (
+        raise_exception(HTTP_ACCESS_DENIED) if not str((STATIC_PATH/subpath).resolve()).startswith(str(STATIC_PATH))
+        else (lambda path: http.Response(open(path, 'rb').read(), content_type=guess_mimetype(path)[0] or 'application/octet-stream'))(
+            STATIC_PATH/subpath/'index.html' if (STATIC_PATH/subpath).is_dir() and (STATIC_PATH/subpath/'index.html').is_file()
+            else STATIC_PATH/subpath if (STATIC_PATH/subpath).is_file()
+            else raise_exception(HTTP_NOT_FOUND)
+        )
+    )
 
     # Non-route functions
     @staticmethod
