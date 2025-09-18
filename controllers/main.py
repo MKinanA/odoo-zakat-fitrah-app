@@ -4,6 +4,7 @@ from mimetypes import guess_type as guess_mimetype
 from ..helpers.get_odoo_module_path import get_odoo_module_path
 from ..helpers.raise_exception import raise_exception
 from ..helpers.key_error_safe_dict import KeyErrorSafeDict
+from ..helpers.simple_log import simple_log as print
 
 ROUTE_PREFIX = '/zakat-fitrah'
 API_ROUTE_PREFIX = f'{ROUTE_PREFIX}/api'
@@ -17,7 +18,7 @@ HTTP_NOT_FOUND = http.NotFound('Requested resource is not found on the server')
 HTTP_ACCESS_DENIED = http.AccessDenied('Access to requested resource denied')
 
 class ZakatFitrahController(http.Controller):
-    print(f'\n{ODOO_MODULE_NAME}: [SUCCESS] ZakatFitrahController controller loaded\n')
+    print('ZakatFitrahController controller loaded')
 
     # Regular routes
     @http.route(ROUTE_PREFIX)
