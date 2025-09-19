@@ -12,6 +12,7 @@ class Muzakki(models.Model):
     _rec_name = 'nama'
 
     nama = fields.Char(required=True)
+    petugas_id = fields.Many2one('zf.petugas', required=True)
     jumlah_jiwa_zakat_fitrah = fields.Integer()
     zakat_fitrah_kilogram_beras = fields.Float() # Total seluruhnya atau sebagian yang dalam kg, bukan perjiwa
     zakat_fitrah_liter_beras = fields.Float() # Total seluruhnya atau sebagian yang dalam liter, bukan perjiwa
