@@ -12,6 +12,7 @@ class Mustahiq(models.Model):
     _rec_name = 'nama'
 
     nama = fields.Char(required=True)
+    kriteria_ids = fields.Many2many('zf.mustahiq.golongan', required=True)
     petugas_id = fields.Many2one('zf.petugas', required=True)
     kilogram_beras_dari_zakat_fitrah = fields.Float()
     liter_beras_dari_zakat_fitrah = fields.Float()

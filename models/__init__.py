@@ -1,1 +1,1 @@
-from . import muzakki, mustahiq, petugas
+from . import muzakki, mustahiq, petugas, golongan_mustahiq

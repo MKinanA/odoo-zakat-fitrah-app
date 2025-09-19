@@ -22,6 +22,7 @@
         <field name="arch" type="xml">
             <list string="Mustahiq">
                 <field name="nama"/>
+                <field name="kriteria_ids" widget="many2many_tags"/>
                 <field name="petugas_id"/>
                 <field name="kilogram_beras_dari_zakat_fitrah"/>
                 <field name="liter_beras_dari_zakat_fitrah"/>
@@ -36,7 +37,17 @@
         <field name="model">zf.petugas</field>
         <field name="arch" type="xml">
             <list string="Petugas">
-                <field name="nama"/>
+                <field name="nama" string="Nama Petugas"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="golongan_mustahiq_list" model="ir.ui.view"><!-- List view (index) for golongan mustahiq -->
+        <field name="name">Golongan Mustahiq</field>
+        <field name="model">zf.mustahiq.golongan</field>
+        <field name="arch" type="xml">
+            <list string="Golongan Mustahiq">
+                <field name="nama" string="Golongan Mustahiq"/>
             </list>
         </field>
     </record>
@@ -87,6 +98,7 @@
                 <sheet>
                     <group>
                         <field name="nama"/>
+                        <field name="kriteria_ids" widget="many2many_tags"/>
                         <field name="petugas_id"/>
                     </group>
                     <notebook>
@@ -152,6 +164,15 @@
         ]"/>
     </record>
 
+    <record id="zf_golongan_mustahiq_action" model="ir.actions.act_window"><!-- Golongan mustahiq action -->
+        <field name="name">Golongan Mustahiq</field>
+        <field name="res_model">zf.mustahiq.golongan</field>
+        <field name="view_mode">list,form</field>
+        <field name="views" eval="[
+            (ref('golongan_mustahiq_list'), 'tree'),
+        ]"/>
+    </record>
+
     <!-- Menus -->
     <record id="zf_menu_root" model="ir.ui.menu"><!-- Root (1st level) menu (defined by not specifying a parent) -->
         <field name="name">Zakat Fitrah</field>
@@ -188,5 +209,11 @@
         <field name="name">Petugas</field>
         <field name="parent_id" ref="zf_menu_miscellaneous"/>
         <field name="action" ref="zf_petugas_action"/>
+    </record>
+
+    <record id="zf_menu_view_golongan_mustahiq" model="ir.ui.menu"><!-- Action (3rd level) menu (defined by specifying a parent that is a first menu) for golongan mustahiq -->
+        <field name="name">Golongan Mustahiq</field>
+        <field name="parent_id" ref="zf_menu_miscellaneous"/>
+        <field name="action" ref="zf_golongan_mustahiq_action"/>
     </record>
 </odoo>
