@@ -1,5 +1,5 @@
 # `odoo-zakat-fitrah-app`
-Aplikasi (module) Odoo sederhana untuk pendataan untuk panitia (atau amil) zakat fitrah.
+Aplikasi (module) Odoo sederhana untuk pendataan sederhana untuk case panitia (atau amil) zakat fitrah sederhana.
 
 ## Overview
 
