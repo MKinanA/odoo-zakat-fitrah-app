@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <list string="Muzakki">
                 <field name="nama"/>
+                <field name="petugas_id"/>
                 <field name="jumlah_jiwa_zakat_fitrah"/>
                 <field name="zakat_fitrah_kilogram_beras"/>
                 <field name="zakat_fitrah_liter_beras"/>
@@ -29,6 +30,91 @@
         </field>
     </record>
 
+    <record id="petugas_list" model="ir.ui.view"><!-- List view (index) for petugas -->
+        <field name="name">Petugas</field>
+        <field name="model">zf.petugas</field>
+        <field name="arch" type="xml">
+            <list string="Petugas">
+                <field name="nama"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="muzakki_form" model="ir.ui.view"><!-- Form view (read) for muzakki -->
+        <field name="name">Muzakki</field>
+        <field name="model">zf.muzakki</field>
+        <field name="arch" type="xml">
+            <form string="Muzakki">
+                <sheet>
+                    <group>
+                        <field name="nama"/>
+                        <field name="petugas_id"/>
+                        <field name="jumlah_jiwa_zakat_fitrah"/>
+                    </group>
+                    <notebook>
+                        <page string="Zakat Fitrah Beras (kilogram)">
+                            <group>
+                                <field name="zakat_fitrah_kilogram_beras" string="Jumlah (total)"/>
+                            </group>
+                        </page>
+                        <page string="Zakat Fitrah Beras (liter)">
+                            <group>
+                                <field name="zakat_fitrah_liter_beras" string="Jumlah (total)"/>
+                            </group>
+                        </page>
+                        <page string="Fidyah Beras (kilogram)">
+                            <group>
+                                <field name="fidyah_kilogram_beras" string="Jumlah (total)"/>
+                            </group>
+                        </page>
+                        <page string="Fidyah Beras (liter)">
+                            <group>
+                                <field name="fidyah_liter_beras" string="Jumlah (total)"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="mustahiq_form" model="ir.ui.view"><!-- Form view (read) for mustahiq -->
+        <field name="name">Mustahiq</field>
+        <field name="model">zf.mustahiq</field>
+        <field name="arch" type="xml">
+            <form string="Mustahiq">
+                <sheet>
+                    <group>
+                        <field name="nama"/>
+                        <field name="petugas_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Beras dari Zakat Fitrah (kilogram)">
+                            <group>
+                                <field name="kilogram_beras_dari_zakat_fitrah" string="Jumlah"/>
+                            </group>
+                        </page>
+                        <page string="Beras dari Zakat Fitrah (liter)">
+                            <group>
+                                <field name="liter_beras_dari_zakat_fitrah" string="Jumlah"/>
+                            </group>
+                        </page>
+                        <page string="Beras dari Fidyah (kilogram)">
+                            <group>
+                                <field name="kilogram_beras_dari_fidyah" string="Jumlah"/>
+                            </group>
+                        </page>
+                        <page string="Beras dari Fidyah (liter)">
+                            <group>
+                                <field name="liter_beras_dari_fidyah" string="Jumlah"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <!-- Action -->
     <record id="zf_muzakki_action" model="ir.actions.act_window"><!-- Muzakki action -->
         <field name="name">Muzakki</field>
@@ -36,6 +122,7 @@
         <field name="view_mode">list,form</field>
         <field name="views" eval="[
             (ref('muzakki_list'), 'tree'),
+            (ref('muzakki_form'), 'form'),
         ]"/>
     </record>
 
@@ -45,13 +132,23 @@
         <field name="view_mode">list,form</field>
         <field name="views" eval="[
             (ref('mustahiq_list'), 'tree'),
+            (ref('mustahiq_form'), 'form'),
         ]"/>
     </record>
 
-    <record id="zf_dashboard_action" model="ir.actions.act_url"> <!-- Dashboard -->
+    <record id="zf_dashboard_action" model="ir.actions.act_url"> <!-- Dashboard action -->
         <field name="name">Dashboard</field>
         <field name="url">/zakat-fitrah</field>
         <field name="target">self</field>
+    </record>
+
+    <record id="zf_petugas_action" model="ir.actions.act_window"><!-- Petugas action -->
+        <field name="name">Petugas</field>
+        <field name="res_model">zf.petugas</field>
+        <field name="view_mode">list,form</field>
+        <field name="views" eval="[
+            (ref('petugas_list'), 'tree'),
+        ]"/>
     </record>
 
     <!-- Menus -->
@@ -74,7 +171,7 @@
         <field name="sequence">2</field>
     </record>
 
-    <record id="zf_menu_dashboard" model="ir.ui.menu"><!-- First (2nd level) menu (defined by specifying a parent that is a root menu) for dashboard -->
+    <record id="zf_menu_miscellaneous" model="ir.ui.menu"><!-- First (2nd level) menu (defined by specifying a parent that is a root menu) for dashboard -->
         <field name="name">Lainnya</field>
         <field name="parent_id" ref="zf_menu_root"/>
         <field name="sequence">3</field>
@@ -82,7 +179,13 @@
 
     <record id="zf_menu_view_dashboard" model="ir.ui.menu"><!-- Action (3rd level) menu (defined by specifying a parent that is a first menu) for dashboard -->
         <field name="name">Tampilkan rekap</field>
-        <field name="parent_id" ref="zf_menu_dashboard"/>
+        <field name="parent_id" ref="zf_menu_miscellaneous"/>
         <field name="action" ref="zf_dashboard_action"/>
+    </record>
+
+    <record id="zf_menu_view_petugas" model="ir.ui.menu"><!-- Action (3rd level) menu (defined by specifying a parent that is a first menu) for petugas -->
+        <field name="name">Tampilkan petugas</field>
+        <field name="parent_id" ref="zf_menu_miscellaneous"/>
+        <field name="action" ref="zf_petugas_action"/>
     </record>
 </odoo>
